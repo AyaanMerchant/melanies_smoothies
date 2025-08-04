@@ -1,5 +1,6 @@
 # Import python packages
 import streamlit as st
+import requests
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -24,6 +25,9 @@ ingredients_list = st.multiselect(
     my_dataframe,
     max_selections=5
 )
+
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
 # Process the order
 if ingredients_list:
